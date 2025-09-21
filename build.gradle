@@ -1,0 +1,41 @@
+buildscript {
+    ext {
+        junitVersion = '5.12.2'
+    }
+}
+
+plugins {
+    id 'application'
+}
+
+group = 'aws.training'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit5
+    testImplementation platform("org.junit:junit-bom:${junitVersion}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // AWS SDK
+    implementation platform('software.amazon.awssdk:bom:2.34.0')
+    implementation 'software.amazon.awssdk:s3'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+        vendor.set(JvmVendorSpec.ADOPTIUM)
+    }
+}
+
+application {
+    mainClass.set("training.Main")
+}
+
+test {
+    useJUnitPlatform()
+}
