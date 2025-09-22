@@ -7,9 +7,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.utils.StringUtils;
 
 import java.net.URI;
@@ -68,6 +66,31 @@ public class MinioSample {
                 .key(objectKey)
                 .build();
         client.putObject(request, RequestBody.fromString(content));
+
+        System.out.println("ファイルのアップロードが完了しました。バケット名： " + bucketName
+                + "フォルダ名： " + folderName + ",ファイル名： " + fileName);
+    }
+
+    /**
+     * バケットを削除する.
+     *
+     * @param bucketName バケット名
+     */
+    public void deleteBucket(String bucketName) {
+        ListObjectsV2Request listRequest = ListObjectsV2Request.builder().bucket(bucketName).build();
+        ListObjectsV2Response response = client.listObjectsV2(listRequest);
+        // バケット内のファイルを全て削除する
+        for (S3Object object : response.contents()) {
+            DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder().bucket(bucketName).key(object.key()).build();
+            client.deleteObject(deleteRequest);
+        }
+        // バケットを削除する
+        DeleteBucketRequest request = DeleteBucketRequest.builder()
+                .bucket(bucketName)
+                .build();
+        client.deleteBucket(request);
+
+        System.out.println("バケットの削除が完了しました。バケット名： " + bucketName);
     }
 
     /**
