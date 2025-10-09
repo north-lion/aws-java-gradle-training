@@ -23,6 +23,8 @@ dependencies {
     // AWS SDK
     implementation platform('software.amazon.awssdk:bom:2.34.0')
     implementation 'software.amazon.awssdk:s3'
+    // JSON
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
 }
 
 java {
