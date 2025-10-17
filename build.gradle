@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        junitVersion = '5.12.2'
+        junitVersion = '6.0.0'
     }
 }
 
