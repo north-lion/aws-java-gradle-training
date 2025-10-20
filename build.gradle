@@ -21,7 +21,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     // AWS SDK
-    implementation platform('software.amazon.awssdk:bom:2.34.0')
+    implementation platform('software.amazon.awssdk:bom:2.35.10')
     implementation 'software.amazon.awssdk:s3'
     // JSON
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
